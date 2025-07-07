@@ -1,50 +1,20 @@
 ---
-title: "Review"
+title: "HW01"
+author: "Johnny Bachrach"
 format: html
 editor: visual
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(knitr)
+library(tidyverse)
+library(kableExtra)
+library(broom)
 ```
 
-## Instructions
-
-1.  **Clone the Homework Repository**\
-    Clone the GitHub repository containing the homework file to your **local machine**.
-
-2.  **Rename the File**\
-    Rename the `.qmd` file from `hw01.qmd` to: `hw01_yourusername.qmd`.\
-
-For example: `hw01_semiyari.qmd`
-
-### Working on Your Homework
-
--   As you complete each part of the homework:
-
-    -   **Stage** and **commit** your `.qmd` file *after each question/sub-question*, such as `1.1`, `1.2`, etc.\
-    -   **Render** your `.qmd` file to **HTML only** (no PDF or Word formats).\
-    -   **Push** your updates to GitHub after completing each **main question**, such as `1.0`, `2.0`, etc.
-
-> Committing and pushing to GitHub **are graded components** of this assignment.
-
-## Final Checks Before Submission
-
--   **Re-render** to HTML before your final commit and push.\
-
--   **Check your output:**\
-
-    -   Make sure **all images display correctly**.\
-    -   Avoid including **excessive output or large datasets** unless asked.
-
-## Final Submission
-
-Once you have finished and pushed your final version:
-
--   Copy the link of your **GitHub Pages site** (where the rendered HTML is published).
--   **Post the link** to the Canvas assignment submission page.
-
-```{r}
+```{r, echo=FALSE, include=FALSE}
 # Install pacman if it's not already installed
 if (!require("pacman")) install.packages("pacman")
 
@@ -53,10 +23,49 @@ pacman::p_load(pacman, tidyverse,
                nycflights13)
 ```
 
--   Consider the data in the nycflights13 package.
+*Consider the data in the nycflights13 package.*
 
 -   **Problem 2**: Is there a relationship between the age of a plane and its delays?
 
+The analysis begins by processing the data by joining the "flights" data set with the "planes" data set using the unique identifier "tailnum", then distinguishing the resulting year.x and year.y variables based on their respective original data set. We also create a new variable called "plane age" by subtracting the plane's manufacture year from the year the flight took place:
+
+```{r}
+flights_planes <- left_join(flights, planes, by = "tailnum")
+
+flights_planes <- flights_planes %>%
+  rename(
+    year_flight = year.x,
+    year_plane = year.y
+  ) %>%
+  mutate(
+    plane_age = ifelse(!is.na(year_plane), year_flight - year_plane, NA)
+  )
+```
+
+We're then able to filter na values from the newly created data set, and create regression models that compare the plane's age to expected departure delay and expected arrival delay:
+
+```{r}
+
+reg_data <- flights_planes %>%
+  filter(!is.na(plane_age), !is.na(dep_delay), !is.na(arr_delay))
+
+model_dep <- lm(dep_delay ~ plane_age, reg_data)
+model_arr <- lm(arr_delay ~ plane_age, reg_data)
+
+```
+
+As seen in the tables below, a linear regression which compared flight delays (in minutes) to plane age (in years) resulted in a statistically significant negative relationship, indicating that older planes are actually expected to experience shorter delay times than newer planes:
+
+```{r, echo=FALSE, include=TRUE}
+tidy(model_dep) %>%
+  kable(digits = 3, caption = "Regression: Plane Age (In Years) vs. Departure Delays (In Minutes)")
+
+tidy(model_arr) %>%
+  kable(digits = 3, caption = "Regression: Plane Age (In Years) vs. Arrival Delays (In Minutes)")
+
+```
+
+
+Specifically, departure delays are expected to *_decrease_* by .096 minutes for every additional year of age for a given aircraft, while arrival delays are expected to decrease by .124 minutes. While the magnitude of this expected difference is relatively small, it does indicate that a 20 year old plane is expected to be delayed between 2 and 2.5 minutes fewer than a brand new plane.
 
 -   **Problem 3**: Find the 10 days of the year that have the highest median departure delay, then select all flights from those 10 days.
-

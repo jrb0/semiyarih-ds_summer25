@@ -69,3 +69,20 @@ tidy(model_arr) %>%
 Specifically, departure delays are expected to *_decrease_* by .096 minutes for every additional year of age for a given aircraft, while arrival delays are expected to decrease by .124 minutes. While the magnitude of this expected difference is relatively small, it does indicate that a 20 year old plane is expected to be delayed between 2 and 2.5 minutes fewer than a brand new plane.
 
 -   **Problem 3**: Find the 10 days of the year that have the highest median departure delay, then select all flights from those 10 days.
+
+Using the previously created data set, we can group the data by month and day, find the median departure delay for each day of the year, then sort the data in descending order of delay. We then select the top 10 entries using head().
+
+```{r, echo=TRUE, include=TRUE}
+group_by(flights_planes, month, day) %>%
+  summarize(
+    median_delay = median(dep_delay, na.rm=T),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(median_delay)) %>%
+  head(10) %>%
+  kable() %>%
+  kable_styling(full_width=FALSE,
+        position="center")
+```
+
+We find that March 8th was the day that experienced the higest median delay - 58 minutes. A Google search reveals that the Northeast experienced [heavy snowstorms](https://www.cnn.com/2013/03/08/travel/weather-airports) that day which resulted in hundreds of flight delays and cancelations.

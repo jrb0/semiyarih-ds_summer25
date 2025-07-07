@@ -82,7 +82,24 @@ group_by(flights_planes, month, day) %>%
   head(10) %>%
   kable() %>%
   kable_styling(full_width=FALSE,
-        position="center")
+    position="center")
 ```
 
 We find that March 8th was the day that experienced the higest median delay - 58 minutes. A Google search reveals that the Northeast experienced [heavy snowstorms](https://www.cnn.com/2013/03/08/travel/weather-airports) that day which resulted in hundreds of flight delays and cancelations.
+
+We can then select the month and day from these 10 entries and place them in their own data set, then semi_join the original data set with the newly created list of 10 days in order to filter out all non top-ten entries:
+
+```{r, echo=TRUE, include=TRUE}
+
+top10_days <- group_by(flights_planes, month, day) %>%
+  summarize(
+    median_delay = median(dep_delay, na.rm=T),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(median_delay)) %>%
+  head(10)
+
+flights_top10 <- flights_planes %>%
+  semi_join(top10_days, by = c("month", "day"))
+
+```

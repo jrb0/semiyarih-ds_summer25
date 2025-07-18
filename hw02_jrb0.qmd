@@ -143,6 +143,31 @@ Given a list of mixed date formats, use `map()` and `possibly()` from `purrr` to
 date_strings <- list("2023-06-10", "2022/12/25", "15-Aug-2021", "InvalidDate")
 ```
 
+```{r}
+
+date_strings <- list("2023-06-10", "2022/12/25", "15-Aug-2021", "InvalidDate")
+
+#defines a parse_date_time function with arguments in order to pass to possibly()
+parse_date_time_possibly <- function(x) { 
+  parse_date_time(x, orders = c("ymd", "dmy"))
+}
+
+#applies previously created function to list of date_strings
+date_strings <- date_strings %>% #
+  map(possibly(parse_date_time_possibly ,otherwise = NA))
+
+#creates a data frame with column list of dates using list
+date_strings_df <- tibble(dates = as_datetime(unlist(date_strings)))
+
+#extracts month from date and creates a new column for month
+date_strings_df <- date_strings_df %>%
+  mutate(
+    month = month(dates)
+  )
+
+date_strings_df
+```
+
 ## Submission
 
 -   Save your Quarto file after completing each problem, render it, then stage and commit the changes.\
@@ -155,7 +180,7 @@ date_strings <- list("2023-06-10", "2022/12/25", "15-Aug-2021", "InvalidDate")
 
 -   Provide the link to your GitHub repository in the **Canvas gradebook** as a text submission.\
 
-🔹 **Each problem is worth 10 points.**\
+🔹 **Each problem is worth 10 points.** \
 
 🔹 You will receive an additional **20 points** if you correctly push your completed file to GitHub and make at least one commit for each question.\
 

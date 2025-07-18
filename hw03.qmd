@@ -1,0 +1,126 @@
+---
+title: "WebSraping-SQL"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = TRUE, 
+                      fig.align  = "center",
+                      fig.height = 3, fig.width = 4)
+ggplot2::theme_set(ggplot2::theme_bw() + ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white")))
+```
+
+## Instructions
+
+
+Complete the following exercises using the appropriate packages in R. Ensure that your solutions are optimized and use functional programming principles where applicable.
+
+1.  Load the necessary libraries.
+2.  Answer each question in separate R code chunks.
+3.  Provide detailed explanations for your approach.
+4.  Submit the rendered HTML file.
+
+
+
+```{r}
+  if (!require("pacman")) install.packages("pacman")
+
+# Load contributed packages with pacman
+pacman::p_load(pacman,rvest, dplyr, tidyverse, xml2,janitor, DBI, duckdb, nycflights13)
+```
+
+
+
+
+
+## WebScraping
+
+### Problem 1:
+
+Go to the following page [List of U.S. states and territories by population](https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population) and select the table `State and territory rankings`.
+
+1. Make sure the name of columns and the first row is correct\
+2. Make sure the class of each column is correct\
+3. Replace `__` with `NA`\
+
+
+## SQL
+
+Please download a duck database.  <https://data-science-master.github.io/lectures/data/flights.duckdb>
+
+-   Use `duckdb()` and `DBI::dbConnect()` to create a connection to "flights.duckdb".
+
+```{r}
+     practcon<- dbConnect(duckdb(dbdir = "./data/flights.duckdb", read_only = FALSE))
+
+```
+
+-   `dbConnect()`: This function establishes a connection to a database.
+
+-   `duckdb()`: Specifies you are connecting to a DuckDB database, which is an embedded analytical SQL database.
+
+-   `dbdir = "flights.duckdb"`: This tells DuckDB to store the database in a file called flights.duckdb. If the file doesn't exist, it will be created.
+
+-   `read_only = FALSE`: This means you are allowing the database to be modified. If you set this to TRUE, the database would be read-only, meaning you could only query data but not make changes to it.
+
+-   So, setting `read_only = FALSE` is necessary if you want to add, update, or delete data in the database.
+
+-   You can see the object `practcon` in the "Global Environment" indicating the connection profile has been established to the database.
+
+-   Check is the connection has established
+
+```{r}
+dbIsValid(practcon)
+```
+
+Please note that a basic SQL code chunk looks like this (put SQL code between the chunks):
+
+```{r, echo = FALSE, comment = ""}
+    codechunk <- "```{sql, connection=con}\n\n```"
+    writeLines(codechunk)
+```
+
+Print out a summary of the tables in this database.
+
+```{sql, connection=practcon, echo=FALSE, eval=FALSE}
+    DESCRIBE;
+```
+
+-   Answer the following question using SQL.
+
+### Problem 2: Select Flights from a Specific Carrier
+
+Write a SQL query to find all flights from the carrier "United Air Lines Inc.".
+
+
+### Problem 3: Count the Number of Flights for Each Carrier
+
+Write a SQL query to count the total number of flights for each carrier.
+
+
+## Remember to Close the connection When You Are Done
+
+ - if the connection is open then you need to use `dbDisconnect()` function
+
+
+
+## Submission
+
+* Save your Quarto file after completing each problem, render it, then stage and commit the changes.\
+
+* Include well-commented code and clear explanations.\
+
+* Make at least **one commit per question**.\
+
+* Submit the rendered file to **Canvas** and push it to your **GitHub repository**.\
+
+
+* Provide the link to your GitHub repository in the **Canvas gradebook** as a text submission.\
+
+🔹 **Problem 1 is worth 40 points, and Problems 2 and 3 are each worth 20 points.**\
+
+🔹 You will receive an additional **20 points** if you correctly push your completed file to GitHub and make at least one commit for each problem.\
+
+
+**Good luck!**

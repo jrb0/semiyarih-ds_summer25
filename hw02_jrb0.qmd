@@ -73,12 +73,15 @@ mtcars_st_devs
 
 ### Question 4:
 
-Write only one line of the code to return only the leap years fo years 2024, 3021, 2000 or 1800, 800, 5050, 600 and 7156. using subsetting with `[]` and without using built-in functions.
+Write only one line of the code to return only the leap years from years 2024, 3021, 2000 or 1800, 800, 5050, 600 and 7156. using subsetting with `[]` and without using built-in functions.
 
 ```{r}
 
 years <- c(2024, 3021, 2000, 1800, 800, 5050, 600, 7156)
 
+leap_years <- years[(years %% 400 == 0) | (years %% 4 == 0 & years %% 100 != 0)]
+
+leap_years
 
 ```
 
@@ -90,16 +93,20 @@ Generate a sequence of dates from **January 1, 2015** to **December 31, 2025**, 
 
 ```{r}
 
-dates <- seq(as.Date("2015/1/1"), as.Date("2025/1/1"), "2 months") #creates a vector with dates
+#creates a vector with dates
+dates <- seq(as.Date("2015/1/1"), as.Date("2025/1/1"), "2 months") 
 
-dates_df <- tibble(date = dates) #converts vector into date frame
+#converts vector into date frame
+dates_df <- tibble(date = dates)
 
-dates_df <- dates_df %>% #adds new colums to the date frame for year, quarter, and isoweek
+#adds new colums to the date frame for year, quarter, and isoweek
+dates_df <- dates_df %>% 
   mutate(year = year(date),
          quarter = quarter(date),
          week = isoweek(date))
 
-dates_df #displays the data
+#displays the data
+dates_df 
 
 ```
 
@@ -112,9 +119,31 @@ sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
 ```
 
 ```{r}
-
 sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
 
+#converts dates vector to ymd format
+sample_dates <- ymd(sample_dates)
+
+#creates vector with difference in days between consecutive dates
+difference_in_days <- as.numeric(diff(sample_dates))
+
+#calculates differences in months using interval + time_length
+difference_in_months <- map2_dbl(
+  sample_dates[-length(sample_dates)],
+  sample_dates[-1],
+  ~ time_length(interval(.x, .y), "months")
+)
+
+#creates data frame with weeks calculated by dividing days by 7 to save work
+differences_df <- tibble(
+  start_date = sample_dates[-length(sample_dates)],
+  end_date = sample_dates[-1],
+  difference_in_days = difference_in_days,
+  difference_in_weeks = difference_in_days/7,
+  difference_in_months = difference_in_months
+)
+
+differences_df
 ```
 
 ### Question 7: Higher-Order Functions with purrr
@@ -179,7 +208,7 @@ date_strings_df
 
 -   Provide the link to your GitHub repository in the **Canvas gradebook** as a text submission.\
 
-🔹 **Each problem is worth 10 points.** \
+🔹 **Each problem is worth 10 points.**\
 
 🔹 You will receive an additional **20 points** if you correctly push your completed file to GitHub and make at least one commit for each question.\
 

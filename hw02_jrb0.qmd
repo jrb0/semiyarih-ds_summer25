@@ -91,7 +91,16 @@ Generate a sequence of dates from **January 1, 2015** to **December 31, 2025**, 
 
 ```{r}
 
-seq(from, to, by, length.out = NULL, along.with = NULL, ...)
+dates <- seq(as.Date("2015/1/1"), as.Date("2025/1/1"), "2 months") #creates a vector with dates
+
+dates_df <- tibble(date = dates) #converts vector into date frame
+
+dates_df <- dates_df %>% #adds new colums to the date frame for year, quarter, and isoweek
+  mutate(year = year(date),
+         quarter = quarter(date),
+         week = isoweek(date))
+
+dates_df #displays the data
 
 ```
 
@@ -105,6 +114,8 @@ sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
 
 ```{r}
 
+sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
+
 ```
 
 ### Question 7: Higher-Order Functions with purrr
@@ -116,6 +127,9 @@ num_lists <- list(c(4, 16, 25, 36, 49), c(2.3, 5.7, 8.1, 11.4), c(10, 20, 30, 40
 ```
 
 ```{r}
+num_lists <- list(c(4, 16, 25, 36, 49), c(2.3, 5.7, 8.1, 11.4), c(10, 20, 30, 40, 50))
+
+map()
 
 ```
 

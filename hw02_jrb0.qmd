@@ -1,5 +1,6 @@
 ---
-title: "Functions-Iterations-Dates-purr"
+title: "HW02"
+author: "Jonathan Bachrach"
 format: html
 editor: visual
 ---

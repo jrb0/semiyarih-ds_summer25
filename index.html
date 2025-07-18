@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Johnny Bachrach">
 
-<title>HW01</title>
+<title>Functions-Iterations-Dates-purr</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,19 +57,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="hw01_jrb0_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw01_jrb0_files/libs/quarto-html/quarto.js"></script>
-<script src="hw01_jrb0_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw01_jrb0_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw01_jrb0_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw01_jrb0_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw01_jrb0_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw01_jrb0_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw01_jrb0_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw01_jrb0_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="hw01_jrb0_files/libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="hw01_jrb0_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="hw02_jrb0_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw02_jrb0_files/libs/quarto-html/quarto.js"></script>
+<script src="hw02_jrb0_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw02_jrb0_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw02_jrb0_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw02_jrb0_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw02_jrb0_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw02_jrb0_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw02_jrb0_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw02_jrb0_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -82,19 +108,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HW01</h1>
+<h1 class="title">Functions-Iterations-Dates-purr</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Johnny Bachrach </p>
-          </div>
-  </div>
     
   
     
@@ -105,190 +125,263 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><em>Consider the data in the nycflights13 package.</em></p>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>Complete the following exercises using the <code>lubridate</code> and <code>purrr</code> packages in R. Ensure that your solutions are optimized and use functional programming principles where applicable.</p>
+<ol type="1">
+<li>Load the necessary libraries.</li>
+<li>Answer each question in separate R code chunks.</li>
+<li>Provide detailed explanations for your approach.</li>
+<li>Submit the rendered HTML file.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-functions" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-functions">Exercise Functions:</h2>
+<section id="question-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
+<p>Write a function (using r code and structure demonstrated in class) to calculate a z score for a given observed value, a mean, and a standard deviation value. And then use your function to find a z score for the following problem. (Research the internet to find the formula used to calculate a z score)<br>
+Observed value = 25.77, mean = 23.54, standard deviation = 2.442</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>z_score <span class="ot">&lt;-</span> <span class="cf">function</span>(observed_value, mean, std_dev) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  (observed_value <span class="sc">-</span> mean) <span class="sc">/</span> std_dev</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">z_score</span>(<span class="at">observed_value =</span> <span class="fl">25.77</span>, <span class="at">mean =</span> <span class="fl">23.54</span>, <span class="at">std_dev =</span> <span class="fl">2.442</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9131859</code></pre>
+</div>
+</div>
+</section>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
+<p>Write a function to calculate the natural log of a number multiplied by the common log of the same number divided by the cube root of a given prime number, <span class="math inline">\(\dfrac{\ln x \times \log x }{\sqrt[3]{p}}\)</span>.<br>
+Use your function to find the answer if the number to be used for both log expressions is 32 and the given prime number is 11, <span class="math inline">\(x = 32, \;\;p=11\)</span>.<br>
+Also use R code to round your answer to the nearest tenth</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>log_calc <span class="ot">&lt;-</span> <span class="cf">function</span>(x, p) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(x) <span class="sc">*</span> <span class="fu">log10</span>(x) <span class="sc">/</span> (p <span class="sc">^</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">log_calc</span>(<span class="dv">32</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.345548</code></pre>
+</div>
+</div>
+</section>
+<section id="question-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
+<p>Use and show R coding to calculate the standard deviation for each variable of the data table <code>mtcars</code> using the <code>Special For Loop Method</code>, which includes three components:</p>
 <ul>
-<li><strong>Problem 2</strong>: Is there a relationship between the age of a plane and its delays?</li>
+<li><p>Output – an object to store the results</p></li>
+<li><p>Sequence – the set of items to loop through</p></li>
+<li><p>Body – the operations performed in each iteration</p></li>
 </ul>
-<p>The analysis begins by processing the data by joining the “flights” data set with the “planes” data set using the unique identifier “tailnum”, then distinguishing the resulting year.x and year.y variables based on their respective original data set. We also create a new variable called “plane age” by subtracting the plane’s manufacture year from the year the flight took place:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flights_planes <span class="ot">&lt;-</span> <span class="fu">left_join</span>(flights, planes, <span class="at">by =</span> <span class="st">"tailnum"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>flights_planes <span class="ot">&lt;-</span> flights_planes <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year_flight =</span> year.x,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">year_plane =</span> year.y</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">plane_age =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(year_plane), year_flight <span class="sc">-</span> year_plane, <span class="cn">NA</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mtcars_st_devs <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> <span class="fu">length</span>(mtcars))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mtcars_st_devs)) {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  mtcars_st_devs[[i]] <span class="ot">&lt;-</span> <span class="fu">sd</span>(mtcars[[i]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>mtcars_st_devs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   6.0269481   1.7859216 123.9386938  68.5628685   0.5346787   0.9784574
+ [7]   1.7869432   0.5040161   0.4989909   0.7378041   1.6152000</code></pre>
 </div>
-<p>We’re then able to filter na values from the newly created data set, and create regression models that compare the plane’s age to expected departure delay and expected arrival delay:</p>
+</div>
+</section>
+<section id="question-4" class="level3">
+<h3 class="anchored" data-anchor-id="question-4">Question 4:</h3>
+<p>Write only one line of the code to return only the leap years from years 2024, 3021, 2000 or 1800, 800, 5050, 600 and 7156. using subsetting with <code>[]</code> and without using built-in functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reg_data <span class="ot">&lt;-</span> flights_planes <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(plane_age), <span class="sc">!</span><span class="fu">is.na</span>(dep_delay), <span class="sc">!</span><span class="fu">is.na</span>(arr_delay))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>model_dep <span class="ot">&lt;-</span> <span class="fu">lm</span>(dep_delay <span class="sc">~</span> plane_age, reg_data)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>model_arr <span class="ot">&lt;-</span> <span class="fu">lm</span>(arr_delay <span class="sc">~</span> plane_age, reg_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2024</span>, <span class="dv">3021</span>, <span class="dv">2000</span>, <span class="dv">1800</span>, <span class="dv">800</span>, <span class="dv">5050</span>, <span class="dv">600</span>, <span class="dv">7156</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>leap_years <span class="ot">&lt;-</span> years[(years <span class="sc">%%</span> <span class="dv">400</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|</span> (years <span class="sc">%%</span> <span class="dv">4</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> years <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">!=</span> <span class="dv">0</span>)]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>leap_years</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2024 2000  800 7156</code></pre>
 </div>
-<p>As seen in the tables below, a linear regression which compared flight delays (in minutes) to plane age (in years) resulted in a statistically significant negative relationship, indicating that older planes are actually expected to experience shorter delay times than newer planes:</p>
+</div>
+</section>
+</section>
+<section id="advanced-date-manipulation-with-lubridate" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-date-manipulation-with-lubridate">Advanced Date Manipulation with lubridate</h2>
+<section id="question-5" class="level3">
+<h3 class="anchored" data-anchor-id="question-5">Question 5:</h3>
+<p>Generate a sequence of dates from <strong>January 1, 2015</strong> to <strong>December 31, 2025</strong>, spaced by every <strong>two months</strong>. Extract the <strong>year</strong>, <strong>quarter</strong>, and <strong>ISO week number</strong> for each date.</p>
 <div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Regression: Plane Age (In Years) vs.&nbsp;Departure Delays (In Minutes)</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">14.197</td>
-<td style="text-align: right;">0.160</td>
-<td style="text-align: right;">88.882</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">plane_age</td>
-<td style="text-align: right;">-0.096</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">-7.919</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Regression: Plane Age (In Years) vs.&nbsp;Arrival Delays (In Minutes)</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">8.474</td>
-<td style="text-align: right;">0.178</td>
-<td style="text-align: right;">47.721</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">plane_age</td>
-<td style="text-align: right;">-0.124</td>
-<td style="text-align: right;">0.013</td>
-<td style="text-align: right;">-9.249</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creates a vector with dates</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2015/1/1"</span>), <span class="fu">as.Date</span>(<span class="st">"2025/1/1"</span>), <span class="st">"2 months"</span>) </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#converts vector into date frame</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">date =</span> dates)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#adds new colums to the date frame for year, quarter, and isoweek</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>dates_df <span class="ot">&lt;-</span> dates_df <span class="sc">%&gt;%</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">quarter =</span> <span class="fu">quarter</span>(date),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> <span class="fu">isoweek</span>(date))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#displays the data</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>dates_df </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 61 × 4
+   date        year quarter  week
+   &lt;date&gt;     &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt;
+ 1 2015-01-01  2015       1     1
+ 2 2015-03-01  2015       1     9
+ 3 2015-05-01  2015       2    18
+ 4 2015-07-01  2015       3    27
+ 5 2015-09-01  2015       3    36
+ 6 2015-11-01  2015       4    44
+ 7 2016-01-01  2016       1    53
+ 8 2016-03-01  2016       1     9
+ 9 2016-05-01  2016       2    17
+10 2016-07-01  2016       3    26
+# ℹ 51 more rows</code></pre>
 </div>
 </div>
-<p>Specifically, departure delays are expected to <em><em>decrease</em></em> by .096 minutes for every additional year of age for a given aircraft, while arrival delays are expected to decrease by .124 minutes. While the magnitude of this expected difference is relatively small, it does indicate that a 20 year old plane is expected to be delayed between 2 and 2.5 minutes fewer than a brand new plane.</p>
+</section>
+<section id="question-6" class="level3">
+<h3 class="anchored" data-anchor-id="question-6">Question 6:</h3>
+<p>Given the following dates, compute the difference in <strong>months</strong> and <strong>weeks</strong> between each consecutive pair.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sample_dates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-03-15"</span>, <span class="st">"2020-07-20"</span>, <span class="st">"2023-01-10"</span>, <span class="st">"2025-09-05"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_dates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-03-15"</span>, <span class="st">"2020-07-20"</span>, <span class="st">"2023-01-10"</span>, <span class="st">"2025-09-05"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#converts dates vector to ymd format</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>sample_dates <span class="ot">&lt;-</span> <span class="fu">ymd</span>(sample_dates)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#creates vector with difference in days between consecutive dates</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>difference_in_days <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">diff</span>(sample_dates))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#calculates differences in months using interval + time_length</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>difference_in_months <span class="ot">&lt;-</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  sample_dates[<span class="sc">-</span><span class="fu">length</span>(sample_dates)],</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  sample_dates[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">time_length</span>(<span class="fu">interval</span>(.x, .y), <span class="st">"months"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#creates data frame with weeks calculated by dividing days by 7 to save work</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>differences_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> sample_dates[<span class="sc">-</span><span class="fu">length</span>(sample_dates)],</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> sample_dates[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">difference_in_days =</span> difference_in_days,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">difference_in_weeks =</span> difference_in_days<span class="sc">/</span><span class="dv">7</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">difference_in_months =</span> difference_in_months</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>differences_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  start_date end_date   difference_in_days difference_in_weeks
+  &lt;date&gt;     &lt;date&gt;                  &lt;dbl&gt;               &lt;dbl&gt;
+1 2018-03-15 2020-07-20                858                123.
+2 2020-07-20 2023-01-10                904                129.
+3 2023-01-10 2025-09-05                969                138.
+# ℹ 1 more variable: difference_in_months &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="question-7-higher-order-functions-with-purrr" class="level3">
+<h3 class="anchored" data-anchor-id="question-7-higher-order-functions-with-purrr">Question 7: Higher-Order Functions with purrr</h3>
+<p>Using <code>map()</code> and <code>map_dbl()</code>, compute the <strong>mean</strong>, <strong>median</strong>, and <strong>standard deviation</strong> for each numeric vector in the following list:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>num_lists <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>, <span class="dv">49</span>), <span class="fu">c</span>(<span class="fl">2.3</span>, <span class="fl">5.7</span>, <span class="fl">8.1</span>, <span class="fl">11.4</span>), <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>num_lists <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>, <span class="dv">49</span>), <span class="fu">c</span>(<span class="fl">2.3</span>, <span class="fl">5.7</span>, <span class="fl">8.1</span>, <span class="fl">11.4</span>), <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="at">.x =</span> num_lists, <span class="at">.f =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26.000  6.875 30.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="at">.x =</span> num_lists, <span class="at">.f =</span> median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25.0  6.9 30.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="at">.x =</span> num_lists, <span class="at">.f =</span> sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.42125  3.84220 15.81139</code></pre>
+</div>
+</div>
+</section>
+<section id="question-8-combining-lubridate-and-purrr" class="level3">
+<h3 class="anchored" data-anchor-id="question-8-combining-lubridate-and-purrr">Question 8: Combining lubridate and purrr</h3>
+<p>Given a list of mixed date formats, use <code>map()</code> and <code>possibly()</code> from <code>purrr</code> to safely convert them to <strong>Date</strong> format and extract the <strong>month name</strong>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>date_strings <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"2023-06-10"</span>, <span class="st">"2022/12/25"</span>, <span class="st">"15-Aug-2021"</span>, <span class="st">"InvalidDate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>date_strings <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"2023-06-10"</span>, <span class="st">"2022/12/25"</span>, <span class="st">"15-Aug-2021"</span>, <span class="st">"InvalidDate"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#defines a parse_date_time function with arguments in order to pass to possibly()</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>parse_date_time_possibly <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parse_date_time</span>(x, <span class="at">orders =</span> <span class="fu">c</span>(<span class="st">"ymd"</span>, <span class="st">"dmy"</span>))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#applies previously created function to list of date_strings</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>date_strings <span class="ot">&lt;-</span> date_strings <span class="sc">%&gt;%</span> <span class="co">#</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">possibly</span>(parse_date_time_possibly ,<span class="at">otherwise =</span> <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: All formats failed to parse. No formats found.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creates a data frame with column list of dates using list</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>date_strings_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">dates =</span> <span class="fu">as_datetime</span>(<span class="fu">unlist</span>(date_strings)))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#extracts month from date and creates a new column for month</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>date_strings_df <span class="ot">&lt;-</span> date_strings_df <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(dates)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>date_strings_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  dates               month
+  &lt;dttm&gt;              &lt;dbl&gt;
+1 2023-06-10 00:00:00     6
+2 2022-12-25 00:00:00    12
+3 2021-08-15 00:00:00     8
+4 NA                     NA</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="submission" class="level2">
+<h2 class="anchored" data-anchor-id="submission">Submission</h2>
 <ul>
-<li><strong>Problem 3</strong>: Find the 10 days of the year that have the highest median departure delay, then select all flights from those 10 days.</li>
+<li><p>Save your Quarto file after completing each problem, render it, then stage and commit the changes.<br>
+</p></li>
+<li><p>Include well-commented code and clear explanations.<br>
+</p></li>
+<li><p>Make at least <strong>one commit per question</strong>.<br>
+</p></li>
+<li><p>Submit the rendered file to <strong>Canvas</strong> and push it to your <strong>GitHub repository</strong>.<br>
+</p></li>
+<li><p>Provide the link to your GitHub repository in the <strong>Canvas gradebook</strong> as a text submission.<br>
+</p></li>
 </ul>
-<p>Using the previously created data set, we can group the data by month and day, find the median departure delay for each day of the year, then sort the data in descending order of delay. We then select the top 10 entries using head().</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(flights_planes, month, day) <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_delay =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm=</span>T),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(median_delay)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width=</span><span class="cn">FALSE</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position=</span><span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">month</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">day</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">median_delay</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">58.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">30.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">19.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">18.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">16.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">14.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">13.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">13.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">13.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">12.5</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-<p>We find that March 8th was the day that experienced the higest median delay - 58 minutes. A Google search reveals that the Northeast experienced <a href="https://www.cnn.com/2013/03/08/travel/weather-airports">heavy snowstorms</a> that day which resulted in hundreds of flight delays and cancelations.</p>
-<p>We can then select the month and day from these 10 entries and place them in their own data set, then semi_join the original data set with the newly created list of 10 days in order to filter out all non top-ten entries:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>top10_days <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights_planes, month, day) <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_delay =</span> <span class="fu">median</span>(dep_delay, <span class="at">na.rm=</span>T),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(median_delay)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>flights_top10 <span class="ot">&lt;-</span> flights_planes <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(top10_days, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"month"</span>, <span class="st">"day"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>🔹 <strong>Each problem is worth 10 points.</strong><br>
+</p>
+<p>🔹 You will receive an additional <strong>20 points</strong> if you correctly push your completed file to GitHub and make at least one commit for each question.<br>
+</p>
+<p><strong>Good luck!</strong></p>
+</section>
 
 </main>
 <!-- /main column -->

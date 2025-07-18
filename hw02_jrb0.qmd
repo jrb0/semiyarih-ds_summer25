@@ -79,7 +79,6 @@ Write only one line of the code to return only the leap years fo years 2024, 302
 
 years <- c(2024, 3021, 2000, 1800, 800, 5050, 600, 7156)
 
-[]
 
 ```
 

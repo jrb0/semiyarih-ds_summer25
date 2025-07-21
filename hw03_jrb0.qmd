@@ -154,8 +154,8 @@ Write a SQL query to find all flights from the carrier "United Air Lines Inc.".
 ```{sql, connection=practcon}
 
 SELECT
-    "flight",
-    "carrier"
+    "carrier",
+    "flight"
 FROM
     flights
 JOIN planes
@@ -170,7 +170,15 @@ Write a SQL query to count the total number of flights for each carrier.
 
 ```{sql, connection=practcon}
 
-
+SELECT
+    "carrier",
+    COUNT(*) AS total_flights
+FROM
+    flights
+GROUP BY
+    "carrier"
+ORDER BY
+    total_flights DESC;
 
 ```
 
@@ -178,9 +186,9 @@ Write a SQL query to count the total number of flights for each carrier.
 
 -   if the connection is open then you need to use `dbDisconnect()` function
 
-```{sql, connection=practcon}
+```{r}
 
-dbDisconnect(practcon)
+DBI::dbDisconnect(practcon, shutdown = TRUE)
 ```
 
 ## Submission

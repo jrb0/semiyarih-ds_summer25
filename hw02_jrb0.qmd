@@ -189,7 +189,7 @@ date_strings <- date_strings %>% #
 date_strings_df <- tibble(dates = as_datetime(unlist(date_strings)))
 
 #extracts month from date and creates a new column for month
-date_strings_df <- date_strings_df %>%
+date_strings_df <- date_strings_df %>%htt
   mutate(
     month = month(dates)
   )

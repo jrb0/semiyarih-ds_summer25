@@ -38,7 +38,7 @@ Go to the following page [List of U.S. states and territories by population](htt
 -   Make sure the class of each column is correct\
 -   Replace `__` with `NA`
 
-```{r}
+```{r, warning = FALSE}
 library(tidyverse)
 library(rvest)
 library(xml2)
@@ -94,7 +94,7 @@ wiki_df <- wiki_df %>%
 wiki_df <- wiki_df %>%
   mutate(state_or_territory = str_remove(state_or_territory, "\\s*\\[\\d+\\]")) #remove bracketed numbers from territories
 
-wiki_df
+glimpse(wiki_df)
 ```
 
 \
@@ -106,7 +106,6 @@ Please download a duck database. <https://data-science-master.github.io/lectures
 -   Use `duckdb()` and `DBI::dbConnect()` to create a connection to "flights.duckdb".
 
 ```{r}
-
 library(DBI)
 library(duckdb)
 
@@ -152,7 +151,6 @@ Print out a summary of the tables in this database.
 Write a SQL query to find all flights from the carrier "United Air Lines Inc.".
 
 ```{sql, connection=practcon}
-
 SELECT
     "carrier",
     "flight"
@@ -169,7 +167,6 @@ WHERE "carrier" = 'UA'
 Write a SQL query to count the total number of flights for each carrier.
 
 ```{sql, connection=practcon}
-
 SELECT
     "carrier",
     COUNT(*) AS total_flights

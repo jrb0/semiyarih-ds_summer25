@@ -1,0 +1,95 @@
+---
+title: "Homework Assignment: Sentiment Analysis of Emma"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = TRUE, 
+                      fig.align  = "center",
+                      fig.height = 3, fig.width = 4)
+ggplot2::theme_set(ggplot2::theme_bw() + ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white")))
+```
+
+**Title**: Exploring Joyful Language in Jane Austen’s *Emma* using Tidytext
+
+
+### **Instructions**
+
+
+Complete the following exercises using the appropriate packages in R. Ensure that your solutions are optimized and use functional programming principles where applicable.
+
+1.  Load the necessary libraries.
+2.  Answer each question in separate R code chunks.
+3.  Provide detailed explanations for your approach.
+4.  Submit the rendered HTML file.
+
+
+
+
+
+
+
+
+####  **Objective**:
+
+Use the **`tidytext`** package and three different **sentiment lexicons** (`nrc`, `afinn`, `bing`) to explore **positive/joyful words** in *Emma* by Jane Austen. You will tokenize the text, apply sentiment filters, visualize frequent sentiment words using `ggplot2`, and create a word cloud.
+
+
+### **Tasks**:
+
+1. **Data Preparation** 
+
+   * Load the `austen_books()` dataset from the **`janeaustenr`** package.
+   * Group by book and detect chapter boundaries using regex.
+   * Create `linenumber` and `chapter` columns.
+
+2. **Tokenization** 
+
+   * Use `unnest_tokens()` to tokenize text into individual words.
+   * Explain briefly **why we name the output column `word`** (include this as a comment in your script).
+
+3. **Sentiment Analysis** 
+
+   * Filter joy/positive words from **each** of the three sentiment lexicons:
+
+     * `nrc` (joy)
+     * `afinn` (positive scores ≥ 1)
+     * `bing` (positive)
+   * Join each with *Emma*'s text and:
+
+     * Count word frequency.
+     * Filter for frequently occurring words (`n > 50`).
+     * Visualize using a **bar chart** (`ggplot2`) and a **word cloud** (`wordcloud`).
+
+4. **Push to GitHub** 
+
+   * Push your complete R script (`.R` file) to a **GitHub repository**.
+   * Your script should include:
+
+     * Data wrangling
+     * Sentiment filtering and joins
+     * Visualization code
+   * You must include **at least 5 meaningful commits** to document your workflow.
+
+---
+## **Rubric 100 Points**
+
+| Category                                       | Points |
+| ---------------------------------------------- | ------ |
+| Step 1: Data wrangling (linenumber, chapter)   | 10      |
+| Step 2: Tokenization + explanation             | 10      |
+| Step 3a: NRC sentiment analysis + plots        | 10      |
+| Step 3b: AFINN sentiment analysis + plots      | 10     |
+| Step 3c: BING sentiment analysis + plots       | 10      |
+| Code readability, structure, and comments      | 10      |
+| Word cloud for each lexicon                    | 20      |
+| GitHub submission                              |         |
+| Commit history (at least 5 meaningful commits) | 20     |
+| **Total**                                      | **100** |
+
+
+
+
+Good Luck!
+

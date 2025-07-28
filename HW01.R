@@ -1,6 +1,9 @@
 install.packages("pacman")
+install.packages("duckdb")
+install.packages("shiny")
 library(tidyverse)
 library(lubridate)
+library(shiny)
 
 
 pacman::p_load(pacman, tidyverse, nycflights13)
@@ -23,3 +26,4 @@ dates_df
 ?possibly
 ?parse_date_time
 ?diff
+?checkbox_Input

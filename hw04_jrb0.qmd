@@ -15,7 +15,6 @@ ggplot2::theme_set(ggplot2::theme_bw() + ggplot2::theme(strip.background = ggplo
 
 ### **Instructions**
 
-
 Complete the following exercises using the appropriate packages in R. Ensure that your solutions are optimized and use functional programming principles where applicable.
 
 1.  Load the necessary libraries.
@@ -23,18 +22,15 @@ Complete the following exercises using the appropriate packages in R. Ensure tha
 3.  Provide detailed explanations for your approach.
 4.  Submit the rendered HTML file.
 
-
-
-
 ### **Objective:**
 
 Create an interactive **Shiny application** in R that allows users to explore selected **discrete and continuous variables** from the `mtcars` dataset. Your app must include multiple tabs to display:
 
-* The data
-* Summary statistics
-* Boxplot (for discrete vs. continuous)
-* Bar plot (for discrete variables)
-* Histogram (for continuous variables)
+-   The data
+-   Summary statistics
+-   Boxplot (for discrete vs. continuous)
+-   Bar plot (for discrete variables)
+-   Histogram (for continuous variables)
 
 You will **publish your app on [shinyapps.io](https://www.shinyapps.io/)** and **push your code to GitHub**. Both the **link to the published app** and the **GitHub repo** must be submitted via the Canvas assignment **text box**.
 
@@ -46,99 +42,98 @@ You will **publish your app on [shinyapps.io](https://www.shinyapps.io/)** and *
 
 #### **1. UI Structure**
 
-* Use `fluidPage()` layout with:
+-   Use `fluidPage()` layout with:
 
-  * A red-colored title: **"Homework Assignment"**
-  * Your name below the title
-  * A yellow background (`setBackgroundColor("yellow")`)
-  * A sidebar with two `selectInput()` dropdowns:
+    -   A red-colored title: **"Homework Assignment"**
 
-    * One for a **discrete** variable
-    * One for a **continuous** variable
-  * A main panel with `tabsetPanel()` that includes five tabs:
+    -   Your name below the title
 
-    * **Data**
-    * **Summary**
-    * **BoxPlot**
-    * **Bar**
-    * **Histogram**
+    -   A yellow background (`setBackgroundColor("yellow")`)
 
-####**2. Server Logic**
+    -   A sidebar with two `selectInput()` dropdowns:
+
+        -   One for a **discrete** variable
+        -   One for a **continuous** variable
+
+    -   A main panel with `tabsetPanel()` that includes five tabs:
+
+        -   **Data**
+        -   **Summary**
+        -   **BoxPlot**
+        -   **Bar**
+        -   **Histogram**
+
+\####**2. Server Logic**
 
 Each tab should do the following:
 
-* **Data Tab:**
+-   **Data Tab:**
 
-  * Show a table with the selected discrete and continuous columns from `mtcars`
-  * Display the dataset name as a heading (e.g., “Dataset: mtcars”)
-  
+    -   Show a table with the selected discrete and continuous columns from `mtcars`
+    -   Display the dataset name as a heading (e.g., “Dataset: mtcars”)
+
 ![](./pix/data)
 
-* **Summary Tab:**
+-   **Summary Tab:**
 
-  * Display summary statistics for both selected variables
-  * Organize output under clear headings: “Discrete” and “Continuous”
-  
+    -   Display summary statistics for both selected variables
+    -   Organize output under clear headings: “Discrete” and “Continuous”
+
 ![](./pix/summary)
 
-* **BoxPlot Tab:**
+-   **BoxPlot Tab:**
 
-  * Show a boxplot using `ggplot2` with:
+    -   Show a boxplot using `ggplot2` with:
 
-    * Discrete variable on x-axis
-    * Continuous variable on y-axis
+        -   Discrete variable on x-axis
+        -   Continuous variable on y-axis
 
 ![](./pix/box)
 
-* **Bar Tab:**
+-   **Bar Tab:**
 
-  * Show a bar plot of the frequency of the selected discrete variable
-  
+    -   Show a bar plot of the frequency of the selected discrete variable
+
 ![](./pix/bar)
 
-* **Histogram Tab:**
+-   **Histogram Tab:**
 
-  * Show a histogram of the selected continuous variable
+    -   Show a histogram of the selected continuous variable
 
 ![](./pix/hist)
 
 #### **3. App Behavior**
 
-* The app should respond dynamically when users change variable selections.
-* All plots must be labeled appropriately and readable.
-* Code must be organized and commented.
+-   The app should respond dynamically when users change variable selections.
+-   All plots must be labeled appropriately and readable.
+-   Code must be organized and commented.
 
----
+------------------------------------------------------------------------
 
 ### **Testing Your App**
 
 Before submitting:
 
-* Ensure all five tabs display correct outputs.
-* Switch inputs multiple times to confirm app robustness.
-* Use `shiny::runApp()` to test locally.
-* Publish to shinyapps.io and verify the public link works.
+-   Ensure all five tabs display correct outputs.
+-   Switch inputs multiple times to confirm app robustness.
+-   Use `shiny::runApp()` to test locally.
+-   Publish to shinyapps.io and verify the public link works.
 
----
+------------------------------------------------------------------------
 
 ### **Submission Instructions**
 
 You must:
 
-✅ Submit an `app.R` file that runs correctly.
-✅ Push your project to a public **GitHub** repository with **at least one commit**.
-✅ Publish your app to **shinyapps.io**.
-✅ **Paste the following two links into the Canvas text submission box**:
+✅ Submit an `app.R` file that runs correctly. ✅ Push your project to a public **GitHub** repository with **at least one commit**. ✅ Publish your app to **shinyapps.io**. ✅ **Paste the following two links into the Canvas text submission box**:
 
-1. GitHub repo URL (e.g., `https://github.com/yourname/mtcars-shiny-app`)
-2. Shiny app URL (e.g., `https://yourname.shinyapps.io/mtcars_app/`)
-
-
+1.  GitHub repo URL (e.g., `https://github.com/yourname/mtcars-shiny-app`)
+2.  Shiny app URL (e.g., `https://yourname.shinyapps.io/mtcars_app/`)
 
 ### **Grading Rubric (Total: 100 points)**
 
 | Category      | Description                                              | Points |
-| ------------- | -------------------------------------------------------- | ------ |
+|---------------|----------------------------------------------------------|--------|
 | App Structure | Includes header, sidebar, tabs, and uses correct inputs  | 10     |
 | Data Tab      | Displays selected variables from `mtcars`                | 10     |
 | Summary Tab   | Shows summary for both discrete and continuous variables | 10     |
@@ -149,7 +144,4 @@ You must:
 | GitHub        | Code is pushed to GitHub with at least one commit        | **10** |
 | Published App | Shiny app is deployed and shared via working link        | **20** |
 
-
-
 Good Luck!
-

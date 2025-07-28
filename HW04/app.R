@@ -1,11 +1,10 @@
 library(shiny)
 library(ggplot2)
-library(bslib)
-library(thematic)
 library(shinythemes)
-library(fresh)
 library(tidyverse)
+library(rsconnect)
 
+#creating a theme in the business section and outputting in .css file in www subdirectory
 create_theme(
   theme = "default",
   bs_vars_global(
@@ -14,6 +13,7 @@ create_theme(
   output_file = "www/mytheme.css"
 )
 
+#using a separate dataset because summarize() function doesn't allow for factors
 mtcars_numeric <- mtcars
 
 #boxplot requires variables as factors - normally would process this independently from the app.R file
@@ -36,12 +36,15 @@ ui <- fluidPage(
   theme = 'mytheme.css',
   titlePanel(span("Homework Assignment", style = "color: red;")),
   h4("Jonathan Bachrach"),
+  
+  #using sidebar layout for simplicity
   sidebarLayout(
     sidebarPanel(
       varSelectInput("discreet", "Discreet Variable", data = mtcars_discreet),
       varSelectInput("continuous", "Continuous Variable", data = mtcars_continuous)
     ),
     
+    #using tabsetpanel() with tabs for each plot/section
     mainPanel(
       tabsetPanel(
         tabPanel("Data", 
@@ -74,11 +77,13 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
+  #renders selected data for data tab
   output$data <- renderTable({
-    mtcars |>
+    mtcars %>%
       select(!!input$discreet, !!input$continuous)
   })
   
+  #creates summary from selected discreet vars for summary tab
   output$summary_discreet <- renderPrint({
     mtcars_numeric %>%
       summarize(
@@ -90,6 +95,7 @@ server <- function(input, output) {
       )
   })
   
+  #creates summary from selected continuous vars for summary tab
   output$summary_continuous <- renderPrint({
     mtcars_continuous %>%
       summarize(
@@ -101,21 +107,25 @@ server <- function(input, output) {
       )
   })
   
+  
+  #creates boxplot from selected continuous and discreet vars for boxplot tab
   output$boxplot <- renderPlot({
     ggplot(mtcars, aes(x = !!input$discreet, y = !!input$continuous)) +
       geom_boxplot()
   })
   
+  #creates bar chart from selected discreet var for bar tab
   output$bar <- renderPlot({
     ggplot(mtcars, aes(x = !!input$discreet)) +
       geom_bar()
   })
   
+  #creates histogram from selected continuous var for histogram tab
   output$histogram <- renderPlot({
     ggplot(mtcars, aes(x = !!input$continuous)) +
       geom_histogram()
   })
 }
   
-# Run the application 
+#runs the application 
 shinyApp(ui = ui, server = server)

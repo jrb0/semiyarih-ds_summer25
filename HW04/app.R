@@ -8,19 +8,7 @@ library(fresh)
 create_theme(
   theme = "default",
   bs_vars_color(
-    gray_base = "green"
-  ),
-  bs_vars_wells(
-    bg = "#90ee90",
-    border = "#552D42"
-  ),
-  bs_vars_global(
-    body_bg = "#e5ffe5"
-  ),
-  bs_vars_input(
-    color = "#5d3954",
-    border_radius = "20px"
-  ),
+    gray_base = "yellow",
   #
   output_file = "www/mytheme.css"
 )

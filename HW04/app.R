@@ -4,14 +4,6 @@ library(shinythemes)
 library(tidyverse)
 library(rsconnect)
 
-#creating a theme in the business section and outputting in .css file in www subdirectory
-create_theme(
-  theme = "default",
-  bs_vars_global(
-    body_bg = "#FFF8BF"
-  ),
-  output_file = "www/mytheme.css"
-)
 
 #using a separate dataset because summarize() function doesn't allow for factors
 mtcars_numeric <- mtcars
@@ -33,6 +25,7 @@ mtcars_continuous <- mtcars %>%
   select(where(~ !is.factor(.)))
 
 ui <- fluidPage(
+  #using pre-made theme with yellow background
   theme = 'mytheme.css',
   titlePanel(span("Homework Assignment", style = "color: red;")),
   h4("Jonathan Bachrach"),

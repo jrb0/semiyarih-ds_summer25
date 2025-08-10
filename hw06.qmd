@@ -47,7 +47,7 @@ Use the **`tidytext`** package and three different **sentiment lexicons** (`nrc`
 2. **Tokenization** 
 
    * Use `unnest_tokens()` to tokenize text into individual words.
-   * Explain briefly **why we name the output column `word`** (include this as a comment in your script).
+   
 
 3. **Sentiment Analysis** 
 
@@ -78,7 +78,7 @@ Use the **`tidytext`** package and three different **sentiment lexicons** (`nrc`
 | Category                                       | Points |
 | ---------------------------------------------- | ------ |
 | Step 1: Data wrangling (linenumber, chapter)   | 10      |
-| Step 2: Tokenization + explanation             | 10      |
+| Step 2: Tokenization                           | 10      |
 | Step 3a: NRC sentiment analysis + plots        | 10      |
 | Step 3b: AFINN sentiment analysis + plots      | 10     |
 | Step 3c: BING sentiment analysis + plots       | 10      |

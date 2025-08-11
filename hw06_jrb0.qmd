@@ -134,9 +134,15 @@ emma_plot_bar(emma_bing, "Positive words - Bing - Emma")
 
 # creat word clouds using wordcloud() function
 
-wordcloud(words = emma_nrc$word, freq = emma_nrc$n)
-wordcloud(words = emma_afinn$word, freq = emma_afinn$n)
-wordcloud(words = emma_bing$word, freq = emma_bing$n)
+wordcloud(words = emma_nrc$word, freq = emma_nrc$n,
+          scale = c(4, 0.5), 
+          max.words = 100)
+wordcloud(words = emma_afinn$word, freq = emma_afinn$n,
+          scale = c(4, 0.5), 
+          max.words = 100)
+wordcloud(words = emma_bing$word, freq = emma_bing$n,
+          scale = c(4, 0.5), 
+          max.words = 100)
 ```
 
 4.  **Push to GitHub**

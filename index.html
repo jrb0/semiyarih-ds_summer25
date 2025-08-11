@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jonathan Bachrach">
 
-<title>WebSraping-SQL</title>
+<title>Homework Assignment: Sentiment Analysis of Emma</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="hw03_jrb0_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw03_jrb0_files/libs/quarto-html/quarto.js"></script>
-<script src="hw03_jrb0_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw03_jrb0_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw03_jrb0_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw03_jrb0_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw03_jrb0_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw03_jrb0_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw03_jrb0_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw03_jrb0_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="hw06_jrb0_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw06_jrb0_files/libs/quarto-html/quarto.js"></script>
+<script src="hw06_jrb0_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw06_jrb0_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw06_jrb0_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw06_jrb0_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw06_jrb0_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw06_jrb0_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw06_jrb0_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw06_jrb0_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -80,19 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">WebSraping-SQL</h1>
+<h1 class="title">Homework Assignment: Sentiment Analysis of Emma</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Jonathan Bachrach </p>
-          </div>
-  </div>
     
   
     
@@ -103,8 +96,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="instructions" class="level2">
-<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p><strong>Title</strong>: Exploring Joyful Language in Jane Austen’s <em>Emma</em> using Tidytext</p>
+<section id="instructions" class="level3">
+<h3 class="anchored" data-anchor-id="instructions"><strong>Instructions</strong></h3>
 <p>Complete the following exercises using the appropriate packages in R. Ensure that your solutions are optimized and use functional programming principles where applicable.</p>
 <ol type="1">
 <li>Load the necessary libraries.</li>
@@ -112,318 +106,324 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Provide detailed explanations for your approach.</li>
 <li>Submit the rendered HTML file.</li>
 </ol>
+<section id="objective" class="level4">
+<h4 class="anchored" data-anchor-id="objective"><strong>Objective</strong>:</h4>
+<p>Use the <strong><code>tidytext</code></strong> package and three different <strong>sentiment lexicons</strong> (<code>nrc</code>, <code>afinn</code>, <code>bing</code>) to explore <strong>positive/joyful words</strong> in <em>Emma</em> by Jane Austen. You will tokenize the text, apply sentiment filters, visualize frequent sentiment words using <code>ggplot2</code>, and create a word cloud.</p>
+</section>
+</section>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks"><strong>Tasks</strong>:</h3>
+<ol type="1">
+<li><p><strong>Data Preparation</strong></p>
+<ul>
+<li><p>Load the <code>austen_books()</code> dataset from the <strong><code>janeaustenr</code></strong> package.</p></li>
+<li><p>Group by book and detect chapter boundaries using regex.</p></li>
+<li><p>Create <code>linenumber</code> and <code>chapter</code> columns.</p></li>
+</ul></li>
+</ol>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janeaustenr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: pacman</code></pre>
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load contributed packages with pacman</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(pacman,rvest, dplyr, tidyverse, xml2,janitor, DBI, duckdb, nycflights13)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="webscraping" class="level2">
-<h2 class="anchored" data-anchor-id="webscraping">WebScraping</h2>
-<section id="problem-1" class="level3">
-<h3 class="anchored" data-anchor-id="problem-1">Problem 1:</h3>
-<p>Go to the following page <a href="https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population">List of U.S. states and territories by population</a> and select the table <code>State and territory rankings</code>.</p>
-<ul>
-<li>Make sure the name of columns and the first row is correct<br>
-</li>
-<li>Make sure the class of each column is correct<br>
-</li>
-<li>Replace <code>__</code> with <code>NA</code></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xml2)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>wiki_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>my_path <span class="ot">&lt;-</span> <span class="st">"/Users/jrbachrach/Library/CloudStorage/GoogleDrive-jrbachrach@gmail.com/My Drive/DATA_613/HW01/wiki.html"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>xml2<span class="sc">::</span><span class="fu">write_html</span>(wiki_html, my_path)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>wiki_html_obj <span class="ot">&lt;-</span> <span class="fu">read_html</span>(my_path)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>wiki_tables <span class="ot">&lt;-</span> <span class="fu">html_elements</span>(wiki_html_obj, <span class="st">"table"</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>tablist <span class="ot">&lt;-</span> <span class="fu">html_table</span>(wiki_tables)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(tablist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "list"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(tablist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>wiki_df <span class="ot">&lt;-</span> tablist[[<span class="dv">1</span>]]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>wiki_df <span class="ot">&lt;-</span> wiki_df[<span class="sc">-</span><span class="dv">1</span>, ]</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wiki_df) <span class="ot">&lt;-</span> <span class="fu">names</span>(wiki_df) <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trim</span>() <span class="sc">%&gt;%</span> <span class="co">#remove space at beginning of title</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">%&gt;%</span> <span class="co">#convert to lowercase</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">[.*?</span><span class="sc">\\</span><span class="st">]"</span>) <span class="sc">%&gt;%</span> <span class="co">#remove bracketed citations</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="co">#remove periods</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="co">#remove close parenthesis</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"[–</span><span class="sc">\\</span><span class="st">s,()]+"</span>, <span class="st">"_"</span>) <span class="sc">%&gt;%</span> <span class="co">#replaces dashes, blank spaces, commas, etc. with _</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"_+"</span>, <span class="st">"_"</span>) <span class="sc">%&gt;%</span> <span class="co">#collapse multiple underscores</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"^_|_$"</span>, <span class="st">""</span>) <span class="co">#remove leading/trailing underscore</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#rename duplicate titles</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wiki_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"census_pop_july_2024"</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wiki_df)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"census_pop_april_2020"</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wiki_df)[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"change_2010_2020_perc"</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wiki_df)[<span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="st">"house_seats_perc"</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>wiki_df <span class="ot">&lt;-</span> wiki_df <span class="sc">%&gt;%</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(wiki_df), <span class="sc">~</span> .x <span class="sc">%&gt;%</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"−"</span>, <span class="st">"-"</span>) <span class="sc">%&gt;%</span> <span class="co">#replace − with -</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"[%,]"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="co">#remove commas and percent signs</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>() <span class="co">#convert to numeric</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(wiki_df<span class="sc">$</span>census_pop_july_2024)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "numeric"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(wiki_df<span class="sc">$</span>state_or_territory)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "character"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wiki_df <span class="ot">&lt;-</span> wiki_df <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">4</span>)) <span class="co">#remove totals at bottom</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>wiki_df <span class="ot">&lt;-</span> wiki_df <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">state_or_territory =</span> <span class="fu">str_remove</span>(state_or_territory, <span class="st">"</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">[</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">]"</span>)) <span class="co">#remove bracketed numbers from territories</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wiki_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 56
-Columns: 11
-$ state_or_territory    &lt;chr&gt; "California", "Texas", "Florida", "New York", "P…
-$ census_pop_july_2024  &lt;dbl&gt; 39431263, 31290831, 23372215, 19867248, 13078751…
-$ census_pop_april_2020 &lt;dbl&gt; 39538223, 29145505, 21538187, 20201249, 13002700…
-$ change_2010_2020_perc &lt;dbl&gt; 6.13, 15.91, 14.56, 4.25, 2.36, -0.14, 2.28, 10.…
-$ change_2010_2020      &lt;dbl&gt; 2284267, 3999944, 2736877, 823147, 300321, -1812…
-$ house_seats           &lt;dbl&gt; 52, 38, 28, 26, 17, 17, 15, 14, 14, 13, 12, 11, …
-$ house_seats_perc      &lt;dbl&gt; 11.95, 8.74, 6.44, 5.98, 3.91, 3.91, 3.45, 3.22,…
-$ pop_perelec_vote_2020 &lt;dbl&gt; 732189, 728638, 717940, 721473, 684353, 674343, …
-$ popperseat_2020       &lt;dbl&gt; 760350, 766987, 769221, 776971, 764865, 753677, …
-$ `%_us_2020`           &lt;dbl&gt; 11.800, 8.698, 6.428, 6.029, 3.881, 3.824, 3.521…
-$ `%_ec_2020`           &lt;dbl&gt; 10.04, 7.43, 5.58, 5.20, 3.53, 3.53, 3.16, 2.97,…</code></pre>
-</div>
-</div>
-<p><br>
-</p>
-</section>
-</section>
-<section id="sql" class="level2">
-<h2 class="anchored" data-anchor-id="sql">SQL</h2>
-<p>Please download a duck database. <a href="https://data-science-master.github.io/lectures/data/flights.duckdb" class="uri">https://data-science-master.github.io/lectures/data/flights.duckdb</a></p>
-<ul>
-<li>Use <code>duckdb()</code> and <code>DBI::dbConnect()</code> to create a connection to “flights.duckdb”.</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>practcon <span class="ot">&lt;-</span> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>(<span class="at">dbdir =</span> <span class="st">"/Users/jrbachrach/Downloads/flights.duckdb"</span>, <span class="at">read_only =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><p><code>dbConnect()</code>: This function establishes a connection to a database.</p></li>
-<li><p><code>duckdb()</code>: Specifies you are connecting to a DuckDB database, which is an embedded analytical SQL database.</p></li>
-<li><p><code>dbdir = "flights.duckdb"</code>: This tells DuckDB to store the database in a file called flights.duckdb. If the file doesn’t exist, it will be created.</p></li>
-<li><p><code>read_only = FALSE</code>: This means you are allowing the database to be modified. If you set this to TRUE, the database would be read-only, meaning you could only query data but not make changes to it.</p></li>
-<li><p>So, setting <code>read_only = FALSE</code> is necessary if you want to add, update, or delete data in the database.</p></li>
-<li><p>You can see the object <code>practcon</code> in the “Global Environment” indicating the connection profile has been established to the database.</p></li>
-<li><p>Check is the connection has established</p></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbIsValid</span>(practcon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
-<p>Please note that a basic SQL code chunk looks like this (put SQL code between the chunks):</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>```{sql, connection=con}
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
 
-```</code></pre>
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ readr     2.1.5
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RColorBrewer</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">austen_books</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># use regex to detect chapters, add linenumber variable</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">chapter =</span> <span class="fu">cumsum</span>(<span class="fu">str_detect</span>(text, <span class="fu">regex</span>(<span class="st">"^chapter</span><span class="sc">\\</span><span class="st">s+</span><span class="sc">\\</span><span class="st">d+"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">linenumber =</span> <span class="fu">row_number</span>()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># separate data set that filters for only book = emma </span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>emma_data <span class="ot">&lt;-</span> <span class="fu">austen_books</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(book <span class="sc">==</span> <span class="st">"Emma"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(book) <span class="sc">%&gt;%</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">chapter =</span> <span class="fu">cumsum</span>(<span class="fu">str_detect</span>(text, <span class="fu">regex</span>(<span class="st">"^chapter</span><span class="sc">\\</span><span class="st">s+</span><span class="sc">\\</span><span class="st">d+"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">linenumber =</span> <span class="fu">row_number</span>()</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 4
+   text                                                 book  chapter linenumber
+   &lt;chr&gt;                                                &lt;fct&gt;   &lt;int&gt;      &lt;int&gt;
+ 1 "SENSE AND SENSIBILITY"                              Sens…       0          1
+ 2 ""                                                   Sens…       0          2
+ 3 "by Jane Austen"                                     Sens…       0          3
+ 4 ""                                                   Sens…       0          4
+ 5 "(1811)"                                             Sens…       0          5
+ 6 ""                                                   Sens…       0          6
+ 7 ""                                                   Sens…       0          7
+ 8 ""                                                   Sens…       0          8
+ 9 ""                                                   Sens…       0          9
+10 "CHAPTER 1"                                          Sens…       1         10
+11 ""                                                   Sens…       1         11
+12 ""                                                   Sens…       1         12
+13 "The family of Dashwood had long been settled in Su… Sens…       1         13
+14 "was large, and their residence was at Norland Park… Sens…       1         14
+15 "their property, where, for many generations, they … Sens…       1         15
+16 "respectable a manner as to engage the general good… Sens…       1         16
+17 "surrounding acquaintance.  The late owner of this … Sens…       1         17
+18 "man, who lived to a very advanced age, and who for… Sens…       1         18
+19 "life, had a constant companion and housekeeper in … Sens…       1         19
+20 "death, which happened ten years before his own, pr… Sens…       1         20</code></pre>
 </div>
 </div>
-<p>Print out a summary of the tables in this database.</p>
+<ol start="2" type="1">
+<li><strong>Tokenization</strong></li>
+</ol>
 <ul>
-<li>Answer the following question using SQL.</li>
+<li>Use <code>unnest_tokens()</code> to tokenize text into individual words.</li>
 </ul>
-<section id="problem-2-select-flights-from-a-specific-carrier" class="level3">
-<h3 class="anchored" data-anchor-id="problem-2-select-flights-from-a-specific-carrier">Problem 2: Select Flights from a Specific Carrier</h3>
-<p>Write a SQL query to find all flights from the carrier “United Air Lines Inc.”.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"carrier"</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"flight"</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    flights</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> planes</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> flights.<span class="ot">"tailnum"</span> <span class="op">=</span> planes.<span class="ot">"tailnum"</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="ot">"carrier"</span> <span class="op">=</span> <span class="st">'UA'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tokenized <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tokenized, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 4
+   book                chapter linenumber word       
+   &lt;fct&gt;                 &lt;int&gt;      &lt;int&gt; &lt;chr&gt;      
+ 1 Sense &amp; Sensibility       0          1 sense      
+ 2 Sense &amp; Sensibility       0          1 and        
+ 3 Sense &amp; Sensibility       0          1 sensibility
+ 4 Sense &amp; Sensibility       0          3 by         
+ 5 Sense &amp; Sensibility       0          3 jane       
+ 6 Sense &amp; Sensibility       0          3 austen     
+ 7 Sense &amp; Sensibility       0          5 1811       
+ 8 Sense &amp; Sensibility       1         10 chapter    
+ 9 Sense &amp; Sensibility       1         10 1          
+10 Sense &amp; Sensibility       1         13 the        
+11 Sense &amp; Sensibility       1         13 family     
+12 Sense &amp; Sensibility       1         13 of         
+13 Sense &amp; Sensibility       1         13 dashwood   
+14 Sense &amp; Sensibility       1         13 had        
+15 Sense &amp; Sensibility       1         13 long       
+16 Sense &amp; Sensibility       1         13 been       
+17 Sense &amp; Sensibility       1         13 settled    
+18 Sense &amp; Sensibility       1         13 in         
+19 Sense &amp; Sensibility       1         13 sussex     
+20 Sense &amp; Sensibility       1         13 their      </code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li><strong>Sentiment Analysis</strong></li>
+</ol>
+<ul>
+<li><p>Filter joy/positive words from <strong>each</strong> of the three sentiment lexicons:</p>
+<ul>
+<li><code>nrc</code> (joy)</li>
+<li><code>afinn</code> (positive scores ≥ 1)</li>
+<li><code>bing</code> (positive)</li>
+</ul></li>
+<li><p>Join each with <em>Emma</em>’s text and:</p>
+<ul>
+<li>Count word frequency.</li>
+<li>Filter for frequently occurring words (<code>n &gt; 50</code>).</li>
+<li>Visualize using a <strong>bar chart</strong> (<code>ggplot2</code>) and a <strong>word cloud</strong> (<code>wordcloud</code>).</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter sentiment lexicons using assignment criteria</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>nrc <span class="ot">&lt;-</span> <span class="fu">get_sentiments</span>(<span class="st">"nrc"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sentiment <span class="sc">==</span> <span class="st">"joy"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>afinn <span class="ot">&lt;-</span> <span class="fu">get_sentiments</span>(<span class="st">"afinn"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(value <span class="sc">&gt;=</span> <span class="dv">1</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>bing <span class="ot">&lt;-</span> <span class="fu">get_sentiments</span>(<span class="st">"bing"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sentiment <span class="sc">==</span> <span class="st">"positive"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># function to count the frequency of each word in the lexicons</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>count_freq <span class="ot">&lt;-</span> <span class="cf">function</span>(data, lexicon) {</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(lexicon, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># run function on emma_data for each lexicon</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>emma_nrc <span class="ot">&lt;-</span> <span class="fu">count_freq</span>(emma_data, nrc)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>emma_afinn <span class="ot">&lt;-</span> <span class="fu">count_freq</span>(emma_data, afinn)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>emma_bing <span class="ot">&lt;-</span> <span class="fu">count_freq</span>(emma_data, bing)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># function to plot frequency</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>emma_plot_bar <span class="ot">&lt;-</span> <span class="cf">function</span>(df, title) {</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word, n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title, <span class="at">x =</span> <span class="st">"Word"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co"># run plot function for each lexicon</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">emma_plot_bar</span>(emma_nrc, <span class="st">"Joy words - NRC - Emma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emma_plot_bar</span>(emma_afinn, <span class="st">"Positive words - AFINN - Emma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emma_plot_bar</span>(emma_bing, <span class="st">"Positive words - Bing - Emma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creat word clouds using wordcloud() function</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="at">words =</span> emma_nrc<span class="sc">$</span>word, <span class="at">freq =</span> emma_nrc<span class="sc">$</span>n,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">0.5</span>), </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">max.words =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="at">words =</span> emma_afinn<span class="sc">$</span>word, <span class="at">freq =</span> emma_afinn<span class="sc">$</span>n,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">0.5</span>), </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">max.words =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud(words = emma_afinn$word, freq = emma_afinn$n, scale = c(4,
+: great could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="at">words =</span> emma_bing<span class="sc">$</span>word, <span class="at">freq =</span> emma_bing<span class="sc">$</span>n,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">0.5</span>), </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">max.words =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud(words = emma_bing$word, freq = emma_bing$n, scale = c(4, :
+good could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hw06_jrb0_files/figure-html/unnamed-chunk-3-6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Push to GitHub</strong></li>
+</ol>
+<ul>
+<li><p>Push your complete R script (<code>.R</code> file) to a <strong>GitHub repository</strong>.</p></li>
+<li><p>Your script should include:</p>
+<ul>
+<li>Data wrangling</li>
+<li>Sentiment filtering and joins</li>
+<li>Visualization code</li>
+</ul></li>
+<li><p>You must include <strong>at least 5 meaningful commits</strong> to document your workflow.</p></li>
+</ul>
+<hr>
+</section>
+<section id="rubric-100-points" class="level2">
+<h2 class="anchored" data-anchor-id="rubric-100-points"><strong>Rubric 100 Points</strong></h2>
+<table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">carrier</th>
-<th style="text-align: right;">flight</th>
+<th>Category</th>
+<th>Points</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">569</td>
+<td>Step 1: Data wrangling (linenumber, chapter)</td>
+<td>10</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">684</td>
+<td>Step 2: Tokenization</td>
+<td>10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1691</td>
+<td>Step 3a: NRC sentiment analysis + plots</td>
+<td>10</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">303</td>
+<td>Step 3b: AFINN sentiment analysis + plots</td>
+<td>10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1183</td>
+<td>Step 3c: BING sentiment analysis + plots</td>
+<td>10</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1115</td>
+<td>Code readability, structure, and comments</td>
+<td>10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1686</td>
+<td>Word cloud for each lexicon</td>
+<td>20</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1138</td>
+<td>GitHub submission</td>
+<td></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">311</td>
+<td>Commit history (at least 5 meaningful commits)</td>
+<td>20</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">1714</td>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</section>
-<section id="problem-3-count-the-number-of-flights-for-each-carrier" class="level3">
-<h3 class="anchored" data-anchor-id="problem-3-count-the-number-of-flights-for-each-carrier">Problem 3: Count the Number of Flights for Each Carrier</h3>
-<p>Write a SQL query to count the total number of flights for each carrier.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"carrier"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_flights</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    flights</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"carrier"</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    total_flights <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">carrier</th>
-<th style="text-align: right;">total_flights</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">UA</td>
-<td style="text-align: right;">58665</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B6</td>
-<td style="text-align: right;">54635</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">54173</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">DL</td>
-<td style="text-align: right;">48110</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">AA</td>
-<td style="text-align: right;">32729</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">MQ</td>
-<td style="text-align: right;">26397</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">US</td>
-<td style="text-align: right;">20536</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">9E</td>
-<td style="text-align: right;">18460</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">WN</td>
-<td style="text-align: right;">12275</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">VX</td>
-<td style="text-align: right;">5162</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-</section>
-<section id="remember-to-close-the-connection-when-you-are-done" class="level2">
-<h2 class="anchored" data-anchor-id="remember-to-close-the-connection-when-you-are-done">Remember to Close the connection When You Are Done</h2>
-<ul>
-<li>if the connection is open then you need to use <code>dbDisconnect()</code> function</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(practcon, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="submission" class="level2">
-<h2 class="anchored" data-anchor-id="submission">Submission</h2>
-<ul>
-<li><p>Save your Quarto file after completing each problem, render it, then stage and commit the changes.<br>
-</p></li>
-<li><p>Include well-commented code and clear explanations.<br>
-</p></li>
-<li><p>Make at least <strong>one commit per question</strong>.<br>
-</p></li>
-<li><p>Submit the rendered file to <strong>Canvas</strong> and push it to your <strong>GitHub repository</strong>.<br>
-</p></li>
-<li><p>Provide the link to your GitHub repository in the <strong>Canvas gradebook</strong> as a text submission.<br>
-</p></li>
-</ul>
-<p>🔹 <strong>Problem 1 is worth 40 points, and Problems 2 and 3 are each worth 20 points.</strong><br>
-</p>
-<p>🔹 You will receive an additional <strong>20 points</strong> if you correctly push your completed file to GitHub and make at least one commit for each problem.<br>
-</p>
-<p><strong>Good luck!</strong></p>
+<p>Good Luck!</p>
 </section>
 
 </main>

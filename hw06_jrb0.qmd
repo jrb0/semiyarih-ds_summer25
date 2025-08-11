@@ -41,6 +41,7 @@ Use the **`tidytext`** package and three different **sentiment lexicons** (`nrc`
 library(janeaustenr)
 library(dplyr)
 library(stringr)
+library(tidytext)
 
 data <- austen_books()
 
@@ -57,35 +58,47 @@ head(data, 20)
 
 ```
 
-1.  **Tokenization**
+2.  **Tokenization**
 
-    -   Use `unnest_tokens()` to tokenize text into individual words.
+-   Use `unnest_tokens()` to tokenize text into individual words.
 
-2.  **Sentiment Analysis**
+```{r}
 
-    -   Filter joy/positive words from **each** of the three sentiment lexicons:
+tokenized <- data %>%
+  unnest_tokens(word, text)
 
-        -   `nrc` (joy)
-        -   `afinn` (positive scores ≥ 1)
-        -   `bing` (positive)
+head(tokenized, 20)
+```
 
-    -   Join each with *Emma*'s text and:
+3.  **Sentiment Analysis**
 
-        -   Count word frequency.
-        -   Filter for frequently occurring words (`n > 50`).
-        -   Visualize using a **bar chart** (`ggplot2`) and a **word cloud** (`wordcloud`).
+-   Filter joy/positive words from **each** of the three sentiment lexicons:
 
-3.  **Push to GitHub**
+    -   `nrc` (joy)
+    -   `afinn` (positive scores ≥ 1)
+    -   `bing` (positive)
 
-    -   Push your complete R script (`.R` file) to a **GitHub repository**.
+-   Join each with *Emma*'s text and:
 
-    -   Your script should include:
+    -   Count word frequency.
+    -   Filter for frequently occurring words (`n > 50`).
+    -   Visualize using a **bar chart** (`ggplot2`) and a **word cloud** (`wordcloud`).
 
-        -   Data wrangling
-        -   Sentiment filtering and joins
-        -   Visualization code
+```{r}
 
-    -   You must include **at least 5 meaningful commits** to document your workflow.
+```
+
+4.  **Push to GitHub**
+
+-   Push your complete R script (`.R` file) to a **GitHub repository**.
+
+-   Your script should include:
+
+    -   Data wrangling
+    -   Sentiment filtering and joins
+    -   Visualization code
+
+-   You must include **at least 5 meaningful commits** to document your workflow.
 
 ------------------------------------------------------------------------
 
